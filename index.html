@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convertisseur Pots de Yaourt</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        h2 {
+            margin-top: 0;
+            color: #2c3e50;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #34495e;
+        }
+        select, input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        select:focus, input:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        .result-box {
+            background-color: #e8f4f8;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #bce8f1;
+        }
+        .result-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #2980b9;
+        }
+        .result-label {
+            color: #31708f;
+            font-size: 1.1em;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>🍰 Cuisine : Convertisseur</h2>
+        
+        <div class="form-group">
+            <label for="ingredient">Choisir l'ingrédient :</label>
+            <select id="ingredient" onchange="calculerPots()">
+                <option value="40">Noix de coco râpée (40g = 1 pot)</option>
+                <option value="50">Cacao en poudre (50g = 1 pot)</option>
+                <option value="50">Poudre d’amandes (50g = 1 pot)</option>
+                <option value="75">Raisins secs (75g = 1 pot)</option>
+                <option value="80">Farine (80g = 1 pot)</option>
+                <option value="80">Sucre roux (80g = 1 pot)</option>
+                <option value="80">Fromage râpé (80g = 1 pot)</option>
+                <option value="90">Graines de couscous (90g = 1 pot)</option>
+                <option value="100">Sucre en poudre (100g = 1 pot)</option>
+                <option value="120">Coquillettes (120g = 1 pot)</option>
+                <option value="120">Riz (120g = 1 pot)</option>
+                <option value="120">Crème fraîche (120g = 1 pot)</option>
+                <option value="150">Lentilles (150g = 1 pot)</option>
+                <option value="160">Haricots secs (160g = 1 pot)</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="quantite">Quantité (en grammes) :</label>
+            <input type="number" id="quantite" placeholder="Ex: 150" oninput="calculerPots()" min="0" step="any">
+        </div>
+
+        <div class="result-box">
+            <div class="result-value" id="resultat">0</div>
+            <div class="result-label">Pot(s) de yaourt</div>
+        </div>
+    </div>
+
+    <script>
+        function calculerPots() {
+            // Récupérer le poids du pot pour l'ingrédient sélectionné
+            const poidsPourUnPot = parseFloat(document.getElementById('ingredient').value);
+            
+            // Récupérer la quantité saisie par l'utilisateur
+            const quantite = parseFloat(document.getElementById('quantite').value);
+            
+            // L'élément où on affiche le résultat
+            const affichageResultat = document.getElementById('resultat');
+
+            // Vérifier que la quantité est un nombre valide
+            if (!isNaN(quantite) && quantite > 0) {
+                // Calcul et arrondi à 2 décimales pour éviter les nombres trop longs (ex: 1.3333333...)
+                const nombreDePots = quantite / poidsPourUnPot;
+                // On utilise Math.round pour nettoyer les décimales inutiles (.00)
+                affichageResultat.innerText = (Math.round(nombreDePots * 100) / 100).toString().replace('.', ',');
+            } else {
+                affichageResultat.innerText = "0";
+            }
+        }
+    </script>
+
+</body>
+</html>
